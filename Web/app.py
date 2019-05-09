@@ -1,13 +1,10 @@
 import os
 import pandas as pd
 import requests
-from flask import Flask
+from flask import Flask, render_template
 import vaderSentiment
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
  
-# function to print sentiments 
-# of the sentence. 
-
 app = Flask(__name__)
 
 
@@ -16,6 +13,8 @@ app = Flask(__name__)
 #################################################
 
 @app.route("/")
+# function to print sentiments 
+# of the sentence.
 def sentiment_scores(): 
     url = 'https://api.yomomma.info/'
 
@@ -51,8 +50,8 @@ def sentiment_scores():
     sentiment = str(sentiment)
     #print(Score)
       
-    Result = (f'The Joke reads: {sentence}.\nCompound sentiment score is : {Score}. Joke Rated As {sentiment}') 
-    return Result
+    Result = (f'The Joke reads: {sentence}. Compound sentiment score is : {Score}. Joke Rated As {sentiment}') 
+    return render_template("index.html", text = Result)
    # ("sentence was rated as ", sentiment_dict['neg']*100, "% Negative") 
    # ("sentence was rated as ", sentiment_dict['neu']*100, "% Neutral") 
     #("sentence was rated as ", sentiment_dict['pos']*100, "% Positive") 
